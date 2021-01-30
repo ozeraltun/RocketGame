@@ -7,7 +7,7 @@ public class Rocket : MonoBehaviour
     Rigidbody rigidBody;
     AudioSource audioSource;
 
-
+    public Rigidbody projectile;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,10 +18,26 @@ public class Rocket : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ProcessInput();
+        Thrust();
+        Rotate();
+        Fire();
     }
-
-    private void ProcessInput()
+    void Fire(){
+        if(Input.GetKey(KeyCode.Q)){
+            Rigidbody clone;
+            
+            //Get the rotation and position of the ship(which is also same with the cone)
+            clone = Instantiate(projectile, transform.position, transform.rotation);
+            //split Nose cone from RocketShip 
+                //make Nose cone Not visible on the ship
+                
+                //create New Nose(bullet) cone 
+                //add speed to this bullet
+                clone.velocity = transform.TransformDirection(Vector3.forward * 10);
+            //create 
+        }
+    }
+    void Thrust()
     {
         if(Input.GetKey(KeyCode.Space)){
             rigidBody.AddRelativeForce(Vector3.up);
@@ -32,8 +48,9 @@ public class Rocket : MonoBehaviour
         else{
             audioSource.Stop();
         }
-        
+    }
         //We should be able to thrust and rotate at the same time, therefore different if
+    void Rotate(){
         if(Input.GetKey(KeyCode.A)){
             transform.Rotate(Vector3.forward);
         }
@@ -43,6 +60,7 @@ public class Rocket : MonoBehaviour
         else{
             //Nothing
         }
-
     }
+
+    
 }
