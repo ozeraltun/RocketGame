@@ -11,7 +11,7 @@ public class Movement : MonoBehaviour
     void Start()
     {
         startingPos = transform.position;
-
+        
     }
 
     // Update is called once per frame

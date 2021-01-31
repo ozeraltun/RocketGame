@@ -6,8 +6,14 @@ public class Rocket : MonoBehaviour
 {
     Rigidbody rigidBody;
     AudioSource audioSource;
-
+    
+    bool projCreated = false;
+    
     public Rigidbody projectile;
+    public GameObject parent;
+
+    [SerializeField] float thrust;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,16 +30,39 @@ public class Rocket : MonoBehaviour
     }
     void Fire(){
         if(Input.GetKey(KeyCode.Q)){
-            Rigidbody clone;
             
+            Rigidbody clone;
             //Get the rotation and position of the ship(which is also same with the cone)
-            clone = Instantiate(projectile, transform.position, transform.rotation);
+            if (projCreated==false){ //we create projectile only one time
+                // //Where is the position to initiate
+                // Vector3 initiateLoc;
+                // Transform tempTransform;
+                // Quaternion initiateRot;
+                // initiateLoc = transform.position; //position must be incremented wit tempLoc
+                // initiateRot = transform.rotation; //rotation is same
+
+                // print(this.NoseCone.parent); 
+                Vector3 bulletPos = parent.transform.GetChild(3).transform.position;
+                Quaternion bulletRot = parent.transform.GetChild(3).transform.rotation;
+                
+                parent.transform.GetChild(3).gameObject.SetActive(false);
+                clone = Instantiate(projectile, bulletPos, bulletRot);
+                
+                clone.AddRelativeForce(Vector3.up * thrust);
+                projCreated = true;
+
+
+            }
+
+
+
+            
             //split Nose cone from RocketShip 
                 //make Nose cone Not visible on the ship
                 
                 //create New Nose(bullet) cone 
                 //add speed to this bullet
-                clone.velocity = transform.TransformDirection(Vector3.forward * 10);
+                
             //create 
         }
     }
