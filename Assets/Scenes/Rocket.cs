@@ -49,7 +49,9 @@ public class Rocket : MonoBehaviour
                 clone = Instantiate(projectile, bulletPos, bulletRot);
                 
                 clone.AddRelativeForce(Vector3.up * thrust);
+                
                 projCreated = true;
+                Invoke("RecreateNose", 3f);
 
 
             }
@@ -65,6 +67,10 @@ public class Rocket : MonoBehaviour
                 
             //create 
         }
+    }
+    void RecreateNose(){
+        parent.transform.GetChild(3).gameObject.SetActive(true);
+        projCreated = false;
     }
     void Thrust()
     {
