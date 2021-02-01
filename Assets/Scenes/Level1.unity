@@ -155,7 +155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1edb017a5c97206db9c9ed4e905615d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectile: {fileID: -403867000956467015, guid: 4641b0414fbee367d80cc5cd1f83d7d2,
+  projectile: {fileID: 5809206785247990073, guid: 4641b0414fbee367d80cc5cd1f83d7d2,
     type: 3}
   parent: {fileID: 354781146}
   thrust: 400
