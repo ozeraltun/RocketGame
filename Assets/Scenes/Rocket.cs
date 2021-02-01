@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class Rocket : MonoBehaviour
 {
-    // TODO: add collusiondetections
-    
+    // TODO: 
+    // add collusiondetections
+    // add audio for fire and collusions
+    // make it multiplayer
+
 
 
     Rigidbody rocket;
