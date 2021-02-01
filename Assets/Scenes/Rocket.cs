@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Rocket : MonoBehaviour
 {
+    // TODO: add collusiondetections
+    
+
+
     Rigidbody rocket;
     AudioSource audioSource;
     
