@@ -5,60 +5,109 @@ using UnityEngine;
 public class Rocket : MonoBehaviour
 {
     // TODO: 
-    // add collusiondetections
-    // add audio for fire and collusions
+    // add audio for collusions
+    // add particles to the booster of rocket and collusions
+    // add different guns
+    // add health bar
+    // add fuel bar
+    // fuel-ammunition-health boxes
+    // add ai 
+    // add menus 
     // make it multiplayer
 
-
-
-    Rigidbody rocket;
-    AudioSource audioSource;
-    
-    bool projCreated = false;
-    
+    [SerializeField] float thrust;
+    [SerializeField] AudioClip mainEngineSound;
+    [SerializeField] AudioClip bulletFireSound;
     public Rigidbody projectile;
     public GameObject parent;
 
-    [SerializeField] float thrust;
-
+    Rigidbody rocket;
     Rigidbody clone;
+    AudioSource audioSource;
+    
+    enum State {Alive, Dead, Firing};
+    State state = State.Alive;
+
+    bool projCreated = false;
+    bool firesoundenable = false;
+    
+    
+    void OnCollisionEnter(Collision collision)
+    {
+        if (state != State.Alive ){ return;} //ignore collusions when not alive
+        switch(collision.gameObject.tag)
+        {
+            case "Friendly":
+                // do nothing
+                break;
+            case "GroundTag":
+                //print("Grounded");
+                break;
+            case "BarrierTag":
+                //print("BarrierHit");
+                break;
+            case "LaunchPadTag":
+                //print("LaunchPadHit");
+                break;
+            default:
+                break;
+        }
+    }
+
+    
+
+    
     
 
 
-
-    // Start is called before the first frame update
     void Start()
     {
+
         rocket = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        Thrust();
-        Rotate();
-        Fire();
+        if (state == State.Alive){
+            Thrust();
+            Rotate();
+            Fire();
+        }
+        
     }
-    void Fire(){
+    void Fire()
+    {
         if(Input.GetKey(KeyCode.Q)){
             
             
             if (projCreated==false){ //we dont want to create multiple projectiles
-                
+                projCreated = true; //Prohibits multiple projectiles
+                firesoundenable = true; //I want firesound to finish even if there is no thrusting 
                 //Getting the position and rotation for the projectile
                 Vector3 bulletPos = parent.transform.GetChild(3).transform.position;
                 Quaternion bulletRot = parent.transform.GetChild(3).transform.rotation;
                 
                 parent.transform.GetChild(3).gameObject.SetActive(false); //Nose will disappear
+                
+                audioSource.PlayOneShot(bulletFireSound);
+                //not thrusting kills this sound
+
+
+
+
                 clone = Instantiate(projectile, bulletPos, bulletRot);  //projectile is instantiated
                 
                 clone.AddRelativeForce(Vector3.up * thrust);  //giving speed(force) to projectile
                 
-                projCreated = true; //Prohibits multiple projectiles
+                
                 Invoke("RecreateNose", 3f); //After 3 seconds we should create(make it visible) the NoseCone
+                Invoke("FireSoundEnable", 0.4f);
             }
         }
+    }
+    void FireSoundEnable(){
+        firesoundenable = false;
     }
     void RecreateNose(){
         parent.transform.GetChild(3).gameObject.SetActive(true);
@@ -71,14 +120,16 @@ public class Rocket : MonoBehaviour
         if(Input.GetKey(KeyCode.Space)){
             rocket.AddRelativeForce(Vector3.up);
             if(!audioSource.isPlaying){
-                audioSource.Play();
+                audioSource.PlayOneShot(mainEngineSound);
             }
         }
         else{
-            audioSource.Stop();
+            if(firesoundenable == false){
+                audioSource.Stop();
+            }
         }
     }
-        //We should be able to thrust and rotate at the same time, therefore different if
+    
     void Rotate(){
         if(Input.GetKey(KeyCode.A)){
             transform.Rotate(Vector3.forward);

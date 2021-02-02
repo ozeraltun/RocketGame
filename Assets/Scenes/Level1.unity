@@ -229,10 +229,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1edb017a5c97206db9c9ed4e905615d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  thrust: 400
+  mainEngineSound: {fileID: 8300000, guid: 8ed4fdcecc87af880951d3923792a398, type: 3}
+  bulletFireSound: {fileID: 8300000, guid: 4a81f317bcc0a33b3bed47ed3cc0b23f, type: 3}
   projectile: {fileID: 5809206785247990073, guid: 4641b0414fbee367d80cc5cd1f83d7d2,
     type: 3}
   parent: {fileID: 354781146}
-  thrust: 400
 --- !u!82 &354781150
 AudioSource:
   m_ObjectHideFlags: 0
@@ -243,7 +245,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 8ed4fdcecc87af880951d3923792a398, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -416,6 +418,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: RocketShip
       objectReference: {fileID: 0}
+    - target: {fileID: 7548828306585485269, guid: 6675321b1b5943966bf357b9e0a846a5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7823014302116177444, guid: 6675321b1b5943966bf357b9e0a846a5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -439,6 +446,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Barrier
+      objectReference: {fileID: 0}
+    - target: {fileID: 319554320949785505, guid: 1a754e01e9dbb5496981c1b166ce5071,
+        type: 3}
+      propertyPath: m_TagString
+      value: BarrierTag
       objectReference: {fileID: 0}
     - target: {fileID: 319554320949785510, guid: 1a754e01e9dbb5496981c1b166ce5071,
         type: 3}
@@ -682,6 +694,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Terrain
       objectReference: {fileID: 0}
+    - target: {fileID: 2349753945466389849, guid: e4c2f0982b85d5d6b9cc5becd246408e,
+        type: 3}
+      propertyPath: m_TagString
+      value: GroundTag
+      objectReference: {fileID: 0}
     - target: {fileID: 2349753945466389853, guid: e4c2f0982b85d5d6b9cc5becd246408e,
         type: 3}
       propertyPath: m_RootOrder
@@ -765,6 +782,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: LauncPad
+      objectReference: {fileID: 0}
+    - target: {fileID: 3710887199810492914, guid: e43ac886d9e248868be416cfec27b380,
+        type: 3}
+      propertyPath: m_TagString
+      value: LaunchPadTag
       objectReference: {fileID: 0}
     - target: {fileID: 8955292347302054728, guid: e43ac886d9e248868be416cfec27b380,
         type: 3}
