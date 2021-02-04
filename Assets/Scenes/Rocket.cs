@@ -5,8 +5,10 @@ using UnityEngine;
 public class Rocket : MonoBehaviour
 {
     // TODO: 
-    // add audio for collusions
-    // add particles to the booster of rocket and collusions
+    // recheck audio for collusions
+    // recheck particles of the booster, rocket and collusions
+
+
     // add different guns
     // add health bar
     // add fuel bar
@@ -18,6 +20,8 @@ public class Rocket : MonoBehaviour
     [SerializeField] float thrust;
     [SerializeField] AudioClip mainEngineSound;
     [SerializeField] AudioClip bulletFireSound;
+    
+
     public Rigidbody projectile;
     public GameObject parent;
 
@@ -54,15 +58,8 @@ public class Rocket : MonoBehaviour
         }
     }
 
-    
-
-    
-    
-
-
     void Start()
     {
-
         rocket = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
     }
@@ -74,8 +71,8 @@ public class Rocket : MonoBehaviour
             Rotate();
             Fire();
         }
-        
     }
+    
     void Fire()
     {
         if(Input.GetKey(KeyCode.Q)){
@@ -91,11 +88,11 @@ public class Rocket : MonoBehaviour
                 parent.transform.GetChild(3).gameObject.SetActive(false); //Nose will disappear
                 
                 audioSource.PlayOneShot(bulletFireSound);
-                //not thrusting kills this sound
+                //not-thrusting kills this sound
 
 
-
-
+                
+                
                 clone = Instantiate(projectile, bulletPos, bulletRot);  //projectile is instantiated
                 
                 clone.AddRelativeForce(Vector3.up * thrust);  //giving speed(force) to projectile
@@ -141,6 +138,4 @@ public class Rocket : MonoBehaviour
             //Nothing
         }
     }
-
-    
 }
