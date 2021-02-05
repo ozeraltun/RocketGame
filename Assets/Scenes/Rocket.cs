@@ -30,8 +30,13 @@ public class Rocket : MonoBehaviour
     AudioSource audioSource;
     
     enum State {Alive, Dead, Firing};
-    State state = State.Alive;
+    enum Gun {Biggun, SmallGun};
 
+    State state = State.Alive;
+    Gun gun = Gun.Biggun;
+    
+
+    
     bool projCreated = false;
     bool firesoundenable = false;
     
@@ -62,6 +67,7 @@ public class Rocket : MonoBehaviour
     {
         rocket = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
+        parent.transform.GetChild(4).gameObject.SetActive(false);
     }
 
     void Update()
@@ -69,16 +75,45 @@ public class Rocket : MonoBehaviour
         if (state == State.Alive){
             Thrust();
             Rotate();
+            ChangeGun();
             Fire();
+        }
+    }
+    void ChangeGun(){
+        if(Input.GetKey(KeyCode.Alpha1)){
+            if(gun == Gun.Biggun){
+                //If already selected dont change anything (Because of the NoseCone Enabling I need this)
+            } 
+            else{
+                parent.transform.GetChild(4).gameObject.SetActive(false);
+                parent.transform.GetChild(3).gameObject.SetActive(true);
+                print("Biggun selected");
+                gun = Gun.Biggun;
+            }
+            
+        }
+        else if(Input.GetKey(KeyCode.Alpha2)){
+            if(gun == Gun.SmallGun){
+                //If already selected dont change anything (Because of the NoseCone Enabling I need this)
+                parent.transform.GetChild(3).gameObject.SetActive(false); //(Nose cone disabled)
+                parent.transform.GetChild(4).gameObject.SetActive(true);
+            }
+            else{
+                gun = Gun.SmallGun;
+                print("Smallgun selected");
+            }
+            
+        }
+        else{
+            //Empty (Additional guns will be implemented here)
         }
     }
     
     void Fire()
     {
         if(Input.GetKey(KeyCode.Q)){
-            
-            
-            if (projCreated==false){ //we dont want to create multiple projectiles
+            if(gun == Gun.Biggun){
+                if (projCreated==false){ //we dont want to create multiple projectiles
                 projCreated = true; //Prohibits multiple projectiles
                 firesoundenable = true; //I want firesound to finish even if there is no thrusting 
                 //Getting the position and rotation for the projectile
@@ -100,6 +135,15 @@ public class Rocket : MonoBehaviour
                 
                 Invoke("RecreateNose", 3f); //After 3 seconds we should create(make it visible) the NoseCone
                 Invoke("FireSoundEnable", 0.4f);
+                }
+            }
+            else if(gun == Gun.SmallGun){
+                //Pass
+
+            }
+            else{
+                //Empty for now
+
             }
         }
     }
@@ -107,7 +151,13 @@ public class Rocket : MonoBehaviour
         firesoundenable = false;
     }
     void RecreateNose(){
-        parent.transform.GetChild(3).gameObject.SetActive(true);
+        if(gun == Gun.SmallGun){
+
+        }
+        else{
+            parent.transform.GetChild(3).gameObject.SetActive(true);
+        }
+        
         Destroy(clone.gameObject);
         projCreated = false;
 
