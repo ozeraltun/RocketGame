@@ -7,12 +7,9 @@ public class Rocket : MonoBehaviour
     // TODO: 
     // recheck audio for collusions
     // recheck particles of the booster, rocket and collusions
-    // recheck different guns
-    // recheck rotation
-    // recheck background
+    // recheck second gun
     // fuel box prefab added but it has a lot of missing parts
 
-    // lighting issues
     // add health bar
     // add fuel bar
     // fuel-ammunition-health boxes
@@ -21,7 +18,10 @@ public class Rocket : MonoBehaviour
     // make it multiplayer
 
 
-    [SerializeField] float thrust;
+    
+    [SerializeField] float rotationThrust = 100f;
+    [SerializeField] float rocketMainThrust = 100f;
+    [SerializeField] float bulletthrust = 500f;
     [SerializeField] AudioClip mainEngineSound;
     [SerializeField] AudioClip bulletFireSound;
     
@@ -39,12 +39,9 @@ public class Rocket : MonoBehaviour
     State state = State.Alive;
     Gun gun = Gun.Biggun;
     
-
-    
     bool projCreated = false;
     bool firesoundenable = false;
-    
-    
+
     void OnCollisionEnter(Collision collision)
     {
         if (state != State.Alive ){ return;} //ignore collusions when not alive
@@ -71,7 +68,7 @@ public class Rocket : MonoBehaviour
     {
         rocket = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
-        parent.transform.GetChild(4).gameObject.SetActive(false);
+        parent.transform.GetChild(4).gameObject.SetActive(false); //second gun will not be visible
     }
 
     void Update()
@@ -134,7 +131,7 @@ public class Rocket : MonoBehaviour
                 
                 clone = Instantiate(projectile, bulletPos, bulletRot);  //projectile is instantiated
                 
-                clone.AddRelativeForce(Vector3.up * thrust);  //giving speed(force) to projectile
+                clone.AddRelativeForce(Vector3.up * bulletthrust);  //giving speed(force) to projectile
                 
                 
                 Invoke("RecreateNose", 3f); //After 3 seconds we should create(make it visible) the NoseCone
@@ -143,11 +140,9 @@ public class Rocket : MonoBehaviour
             }
             else if(gun == Gun.SmallGun){
                 //Pass
-
             }
             else{
                 //Empty for now
-
             }
         }
     }
@@ -168,8 +163,9 @@ public class Rocket : MonoBehaviour
     }
     void Thrust()
     {
+        float thrustSpeed = rocketMainThrust * Time.deltaTime;
         if(Input.GetKey(KeyCode.Space)){
-            rocket.AddRelativeForce(Vector3.up);
+            rocket.AddRelativeForce(Vector3.up * thrustSpeed);
             if(!audioSource.isPlaying){
                 audioSource.PlayOneShot(mainEngineSound);
             }
@@ -182,14 +178,19 @@ public class Rocket : MonoBehaviour
     }
     
     void Rotate(){
+        rocket.freezeRotation = true;
+        float rotationSpeed = rotationThrust * Time.deltaTime;
+
         if(Input.GetKey(KeyCode.A)){
-            transform.Rotate(Vector3.forward);
+            
+            transform.Rotate(Vector3.forward * rotationSpeed);
         }
         else if(Input.GetKey(KeyCode.D)){
-            transform.Rotate(-Vector3.forward);
+            transform.Rotate(-Vector3.forward * rotationSpeed);
         }
         else{
             //Nothing
         }
+        rocket.freezeRotation = false;
     }
 }
