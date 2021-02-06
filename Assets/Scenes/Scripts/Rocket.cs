@@ -7,15 +7,18 @@ public class Rocket : MonoBehaviour
     // TODO: 
     // recheck audio for collusions
     // recheck particles of the booster, rocket and collusions
-
-
-    // add different guns
+    // recheck different guns
+    // recheck rotation
+    // recheck background
+    
+    // lighting issues
     // add health bar
     // add fuel bar
     // fuel-ammunition-health boxes
-    // add ai 
-    // add menus 
+    // add menus
+    // add ai  
     // make it multiplayer
+
 
     [SerializeField] float thrust;
     [SerializeField] AudioClip mainEngineSound;
