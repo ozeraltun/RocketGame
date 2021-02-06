@@ -10,7 +10,8 @@ public class Rocket : MonoBehaviour
     // recheck different guns
     // recheck rotation
     // recheck background
-    
+    // fuel box prefab added but it has a lot of missing parts
+
     // lighting issues
     // add health bar
     // add fuel bar
